@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequests\LoginRequest;
+use App\Http\Requests\AuthRequests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,6 +44,26 @@ class AuthController extends Controller
     public function getLogout()
     {
         Auth::logout();
+
+        return redirect()->route('get-login');
+    }
+
+    public function getRegister()
+    {
+
+        return view($this->dirView . 'register');
+    }
+
+    public function postRegister(RegisterRequest $request)
+    {
+        $data = [
+            'name'     => $request['name'],
+            'email'    => $request['email'],
+            'password' => $request['password'],
+        ];
+
+        $this->user->create($data);
+
         return redirect()->route('get-login');
     }
 }

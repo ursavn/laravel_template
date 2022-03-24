@@ -23,3 +23,6 @@ Route::get('login', [AuthController::class, 'getLogin'])->name('get-login');
 Route::post('login', [AuthController::class, 'postLogin'])->name('post-login');
 
 Route::get('logout', [AuthController::class, 'getLogout'])->name('get-logout');
+
+Route::get('register', [AuthController::class, 'getRegister'])->name('get-register');
+Route::post('register', [AuthController::class, 'postRegister'])->name('post-register');
