@@ -66,6 +66,16 @@
                         </div>
                     </form>
                 </div>
+                @if(FACEBOOK_LOGIN == ON)
+                    <a href="{{ route('facebook.login') }}">
+                        Login with Facebook
+                    </a>
+                @endif
+                @if(GOOGLE_LOGIN == ON)
+                    <a href="{{ url('google.login') }}">
+                        Login with Google
+                    </a>
+                @endif
             </div>
         </div>
     </div>
