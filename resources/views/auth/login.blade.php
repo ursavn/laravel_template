@@ -53,11 +53,17 @@
         justify-content: space-between;
         margin-top: 15px;
     }
-    .btn-link {
+    a {
         color: #7B68EE;
         text-decoration: none;
     }
-
+    .login-with a {
+        border: 1px solid rgba(0,0,0,.26);
+        color: rgba(0,0,0,.87);
+        border-radius: 2px;
+        padding: 8px;
+        margin-right: 20px;
+    }
 </style>
 <div class="container">
     <div class="card">
@@ -105,6 +111,18 @@
                     </div>
                 </div>
             </form>
+            <div class="login-with">
+                @if(FACEBOOK_LOGIN == ON)
+                    <a href="{{ route('facebook.login') }}">
+                        Login with Facebook
+                    </a>
+                @endif
+                @if(GOOGLE_LOGIN == ON)
+                    <a href="{{ url('google.login') }}">
+                        Login with Google
+                    </a>
+                @endif
+            </div>
         </div>
     </div>
 </div>
