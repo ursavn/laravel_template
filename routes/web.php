@@ -31,6 +31,13 @@ Route::namespace('Backend')->prefix('user')->name('user.')->group(function(){
     Route::post('/change-password', 'UserController@changePassword')->name('post-change-password');
 });
 
+Route::namespace('Backend')->prefix('users')->name('users.')->group(function(){
+    Route::get('/{id}/change-password', function ($id) {
+        return view('backend\users\change-password', compact('id'));
+    })->name('get-change-password');
+    Route::post('/{id}/change-password', 'UsersController@changePassword')->name('post-change-password');
+});
+
 //facebook login
 //Route::prefix('facebook')->name('facebook.')->group( function(){
 //    Route::get('auth', [FaceBookController::class, 'loginUsingFacebook'])->name('login');
