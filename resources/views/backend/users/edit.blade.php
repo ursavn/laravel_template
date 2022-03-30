@@ -6,8 +6,9 @@
         <div class="col-md-8">
             <form action="{{ route('profile.update') }}" method="post">
                 @csrf
+                <input name="id" value="{{ $user->id }}" type="hidden">
                 <div class="card">
-                    <div class="card-header">{{ __('Edit Profile') }}</div>
+                    <div class="card-header">{{ __('Edit User') }}</div>
                     <div class="card-body">
                         <div class="form-group">
                             <input class="form-control" name="name" value="{{ $user->name }}" type="text">

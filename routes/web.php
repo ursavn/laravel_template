@@ -22,9 +22,6 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::namespace('Backend')->prefix('user')->name('user.')->group(function(){
-    Route::get('/', 'UserController@index')->name('profile');
-    Route::get('/edit', 'UserController@edit')->name('edit');
-    Route::post('/update', 'UserController@update')->name('update');
     Route::get('/change-password', function () {
         return view('backend\user\change-password');
     })->name('get-change-password');
@@ -36,6 +33,15 @@ Route::namespace('Backend')->prefix('users')->name('users.')->group(function(){
         return view('backend\users\change-password', compact('id'));
     })->name('get-change-password');
     Route::post('/{id}/change-password', 'UsersController@changePassword')->name('post-change-password');
+    Route::get('/', 'UserController@getUserList')->name('list');
+    Route::get('/{id}', 'UserController@getDetailUser')->name('detail');
+    Route::get('/edit/{id}', 'UserController@editUser')->name('edit');
+});
+
+Route::namespace('Backend')->prefix('profile')->name('profile.')->group(function(){
+    Route::get('/', 'UserController@index')->name('index');
+    Route::get('/edit', 'UserController@edit')->name('edit');
+    Route::post('/update', 'UserController@update')->name('update');
 });
 
 //facebook login
