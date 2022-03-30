@@ -25,6 +25,10 @@ Route::namespace('Backend')->prefix('user')->name('user.')->group(function(){
     Route::get('/', 'UserController@index')->name('profile');
     Route::get('/edit', 'UserController@edit')->name('edit');
     Route::post('/update', 'UserController@update')->name('update');
+    Route::get('/change-password', function () {
+        return view('backend\user\change-password');
+    })->name('get-change-password');
+    Route::post('/change-password', 'UserController@changePassword')->name('post-change-password');
 });
 
 //facebook login
