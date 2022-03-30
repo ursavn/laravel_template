@@ -78,4 +78,43 @@ class UserController extends Controller
 
         return redirect()->route('user.get-change-password')->with('success', 'Password changed successfully. Please log in again.');
     }
+
+    /**
+     * @return View
+     */
+    public function getUserList() :view
+    {
+        $users = User::all();
+        return view('backend/users/list',compact('users'));
+    }
+
+    /**
+     * @return View
+     */
+    public function getDetailUser($id) :view
+    {
+        $user = User::find($id);
+        return view('backend/users/detail',compact('user'));
+    }
+
+    /**
+     * @return View
+     */
+    public function editUser($id): View
+    {
+        $user = User::find($id);
+        return view('backend/users/edit',compact('user'));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updateUser(Request $request)
+    {
+        User::where('id', $request->id)
+            ->update(['name' => $request->name, 'email' => $request->email]);
+        return back();
+    }
 }
