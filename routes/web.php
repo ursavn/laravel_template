@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\FaceBookController;
-use App\Http\Controllers\Auth\GoogleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +20,12 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::namespace('Backend')->prefix('user')->name('user.')->group(function(){
+    Route::get('/', 'UserController@index')->name('profile');
+    Route::get('/edit', 'UserController@edit')->name('edit');
+    Route::post('/update', 'UserController@update')->name('update');
+});
 
 //facebook login
 //Route::prefix('facebook')->name('facebook.')->group( function(){
@@ -31,7 +34,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //});
 
 //google login
-//Route::prefix('facebook')->name('facebook.')->group( function(){
+//Route::prefix('google')->name('google.')->group( function(){
 //    Route::get('auth', [GoogleController::class, 'loginUsingGoogle'])->name('login');
 //    Route::get('callback', [GoogleController::class, 'handleGoogleCallback'])->name('callback');
 //});
