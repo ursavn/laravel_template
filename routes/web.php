@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\FaceBookController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //    Route::get('auth', [GoogleController::class, 'loginUsingGoogle'])->name('login');
 //    Route::get('callback', [GoogleController::class, 'handleGoogleCallback'])->name('callback');
 //});
+
+Route::get('/change-password', function () {
+    return view('user\change-password');
+})->name('get-change-password');
+
+Route::post('/change-password', [UserController::class, 'changePassword'])->name('post-change-password');
+
