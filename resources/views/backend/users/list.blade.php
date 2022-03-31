@@ -21,7 +21,11 @@
                         <a class="btn btn-success" href="{{ route('users.detail', ['id' => $user->id]) }}">Detail</a>
                         <a class="btn btn-warning" href="{{ route('users.edit', ['id' => $user->id]) }}">Edit</a>
                         <a class="btn btn-info" href="{{ route('users.get-change-password', ['id' => $user->id]) }}">Change Password</a>
-                        <a class="btn btn-danger">Deactivate</a>
+                        <form method="POST" action="{{ route('users.active', ['id' => $user->id]) }}">
+                            @csrf
+                            <input type="hidden" name="active" value="{{ $user->active }}">
+                            <input type="submit" class="btn btn-danger" value="{{ $user->active == ON ? 'Deactivate' : 'Active' }}">
+                        </form>
                     </td>
                 </tr>
             @empty

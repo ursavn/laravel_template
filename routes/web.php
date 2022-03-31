@@ -39,12 +39,18 @@ Route::namespace('Backend')->prefix('users')->name('users.')->group(function(){
     Route::get('/edit/{id}', 'UserController@editUser')->name('edit');
     Route::get('/create', 'UserController@create')->name('create');
     Route::post('/store', 'UserController@store')->name('store');
+    Route::post('/active/{id}', 'UserController@changeUserActiveStatus')->name('active');
 });
 
 Route::namespace('Backend')->prefix('profile')->name('profile.')->group(function(){
     Route::get('/', 'UserController@index')->name('index');
     Route::get('/edit', 'UserController@edit')->name('edit');
     Route::post('/update', 'UserController@update')->name('update');
+});
+
+Route::namespace('Backend')->prefix('setting')->name('setting.')->group(function(){
+    Route::get('/', 'SettingController@index')->name('list');
+    Route::post('/update/{id}', 'SettingController@update')->name('update');
 });
 
 //facebook login
