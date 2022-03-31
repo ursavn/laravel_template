@@ -138,4 +138,12 @@ class UserController extends Controller
 
         return redirect()->route('users.get-change-password', $id)->with('error', 'Error');
     }
+
+    public function changeUserActiveStatus(Request $request, $id)
+    {
+        $user = User::find($id);
+        $newStatus = $request->active == OFF ? 1 : 0;
+        $user->update(['active' => $newStatus]);
+        return redirect()->route('users.list');
+    }
 }
