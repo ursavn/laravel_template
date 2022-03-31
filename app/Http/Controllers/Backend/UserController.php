@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\UsersRequest\ChangePasswordRequest;
+use App\Http\Requests\UsersRequest\CreateRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -54,32 +54,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param ChangePasswordRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function changePassword(ChangePasswordRequest $request) {
-        $currentPassword = $request['current_password'];
-        $newPassword     = $request['new_password'];
-
-        if (!(Hash::check($currentPassword, Auth::user()->password))) {
-            return redirect()->route('user.get-change-password')->with('error', 'The current password is incorrect.');
-        }
-
-        if (strcmp($currentPassword, $newPassword) == false) {
-            return redirect()->route('user.get-change-password')->with('error', 'The new password is the same as the current password.');
-        }
-
-        $user = User::find(Auth::user()->id);
-
-        $user->update([
-            'password' => bcrypt($newPassword)
-        ]);
-
-        return redirect()->route('user.get-change-password')->with('success', 'Password changed successfully. Please log in again.');
-    }
-
-    /**
      * @return View
      */
     public function getUserList() :view
@@ -116,5 +90,52 @@ class UserController extends Controller
         User::where('id', $request->id)
             ->update(['name' => $request->name, 'email' => $request->email]);
         return back();
+    }
+
+    /**
+     * @return View
+     */
+    public function create(): View
+    {
+        return view('backend/users/create');
+    }
+
+    /**
+     * @param CreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(CreateRequest $request)
+    {
+        $data = [
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+        ];
+
+        User::create($data);
+
+        return redirect()->route('users.list');
+    }
+
+    /**
+     * @param ChangePasswordRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function changePassword(ChangePasswordRequest $request, $id) {
+        $user = User::find($id);
+
+        if ($user) {
+            $newPassword = $request['new_password'];
+
+            $user->update([
+                'password' => bcrypt($newPassword)
+            ]);
+
+            return redirect()->route('users.get-change-password', $id)->with('success', 'Successfully');
+        }
+
+        return redirect()->route('users.get-change-password', $id)->with('error', 'Error');
     }
 }

@@ -22,21 +22,23 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::namespace('Backend')->prefix('user')->name('user.')->group(function(){
+Route::namespace('Backend')->group(function(){
     Route::get('/change-password', function () {
         return view('backend\user\change-password');
     })->name('get-change-password');
-    Route::post('/change-password', 'UserController@changePassword')->name('post-change-password');
+    Route::post('/change-password', 'ChangePasswordController@changePassword')->name('post-change-password');
 });
 
 Route::namespace('Backend')->prefix('users')->name('users.')->group(function(){
     Route::get('/{id}/change-password', function ($id) {
         return view('backend\users\change-password', compact('id'));
     })->name('get-change-password');
-    Route::post('/{id}/change-password', 'UsersController@changePassword')->name('post-change-password');
+    Route::post('/{id}/change-password', 'UserController@changePassword')->name('post-change-password');
     Route::get('/', 'UserController@getUserList')->name('list');
-    Route::get('/{id}', 'UserController@getDetailUser')->name('detail');
+    Route::get('/detail/{id}', 'UserController@getDetailUser')->name('detail');
     Route::get('/edit/{id}', 'UserController@editUser')->name('edit');
+    Route::get('/create', 'UserController@create')->name('create');
+    Route::post('/store', 'UserController@store')->name('store');
 });
 
 Route::namespace('Backend')->prefix('profile')->name('profile.')->group(function(){
