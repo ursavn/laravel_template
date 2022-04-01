@@ -26,7 +26,10 @@ Route::namespace('Backend')->group(function(){
     Route::get('/change-password', function () {
         return view('backend\user\change-password');
     })->name('get-change-password');
-    Route::post('/change-password', 'ChangePasswordController@changePassword')->name('post-change-password');
+    Route::post('/change-password', 'ChangePasswordController@changePassword')
+        ->name('post-change-password');
+    Route::get('send-mail-change-password', 'SendEmailController@index')
+        ->name('send-mail-change-password');
 });
 
 Route::namespace('Backend')->prefix('users')->name('users.')->group(function(){
@@ -54,13 +57,13 @@ Route::namespace('Backend')->prefix('setting')->name('setting.')->group(function
 });
 
 //facebook login
-//Route::prefix('facebook')->name('facebook.')->group( function(){
-//    Route::get('auth', [FaceBookController::class, 'loginUsingFacebook'])->name('login');
-//    Route::get('callback', [FaceBookController::class, 'handleFacebookCallback'])->name('callback');
+//Route::namespace('Backend')->prefix('facebook')->name('facebook.')->group( function(){
+//    Route::get('auth', 'FaceBookController@loginUsingFacebook')->name('login');
+//    Route::get('callback', 'FaceBookController@handleFacebookCallback')->name('callback');
 //});
 
 //google login
-//Route::prefix('google')->name('google.')->group( function(){
-//    Route::get('auth', [GoogleController::class, 'loginUsingGoogle'])->name('login');
-//    Route::get('callback', [GoogleController::class, 'handleGoogleCallback'])->name('callback');
+//Route::namespace('Backend')->prefix('google')->name('google.')->group( function(){
+//    Route::get('auth', 'GoogleController@loginUsingGoogle'])->name('login');
+//    Route::get('callback', 'GoogleController@handleGoogleCallback')->name('callback');
 //});
