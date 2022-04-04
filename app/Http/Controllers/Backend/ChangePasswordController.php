@@ -30,11 +30,11 @@ class ChangePasswordController extends Controller
         $newPassword     = $request['new_password'];
 
         if (!(Hash::check($currentPassword, Auth::user()->password))) {
-            return redirect()->route('get-change-password')->with('error', 'The current password is incorrect.');
+            return redirect()->route('profile.edit')->with('error', 'The current password is incorrect.');
         }
 
         if (strcmp($currentPassword, $newPassword) == false) {
-            return redirect()->route('get-change-password')->with('error', 'The new password is the same as the current password.');
+            return redirect()->route('profile.edit')->with('error', 'The new password is the same as the current password.');
         }
 
         $user = User::find(Auth::user()->id);
@@ -43,6 +43,6 @@ class ChangePasswordController extends Controller
             'password' => bcrypt($newPassword)
         ]);
 
-        return redirect()->route('get-change-password')->with('success', 'Password changed successfully. Please log in again.');
+        return redirect()->route('profile.edit')->with('success', 'Password changed successfully. Please log in again.');
     }
 }

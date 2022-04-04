@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    @include('includes.alert-block')
     <div class="row">
         <div class="col-lg-4 mt-4">
             <div class="card border-0 rounded shadow">
@@ -103,13 +104,13 @@
                         </div><!--end row-->
                         <div class="row">
                             <div class="col-sm-12">
-                                <input
-                                    type="submit"
+                                <button
                                     id="submit"
-                                    name="send"
                                     class="btn btn-primary"
-                                    value="Save Changes"
+                                    type="submit"
                                 >
+                                    {{ __('Save Changes') }}
+                                </button>
                             </div><!--end col-->
                         </div><!--end row-->
                     </form><!--end form-->
@@ -155,17 +156,27 @@
         <div class="col-lg-4 mt-4">
             <div class="card border-0 rounded shadow p-4">
                 <h5 class="mb-0">{{ __('Change password :') }}</h5>
-                <form>
+                <form method="POST" action="{{ route('post-change-password') }}">
+                    @csrf
                     <div class="row mt-4">
                         <div class="col-lg-12">
                             <div class="mb-3">
-                                <label class="form-label" for="old_password">{{ __('Old password :') }}</label>
+                                <label class="form-label" for="current_password">{{ __('Old password :') }}</label>
                                 <div class="form-icon position-relative">
                                     <i data-feather="key" class="fea icon-sm icons"></i>
                                     <input
-                                        id="old_password"
-                                        type="password" class="form-control ps-5" placeholder="Old password" required=""
+                                        id="current_password"
+                                        name="current_password"
+                                        type="password"
+                                        class="form-control ps-5 @error('current_password') is-invalid @enderror"
+                                        placeholder="Old password"
+                                        required=""
                                     >
+                                    @error('current_password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div><!--end col-->
@@ -177,8 +188,17 @@
                                     <i data-feather="key" class="fea icon-sm icons"></i>
                                     <input
                                         id="new_password"
-                                        type="password" class="form-control ps-5" placeholder="New password" required=""
+                                        name="new_password"
+                                        type="password"
+                                        class="form-control ps-5 @error('new_password') is-invalid @enderror"
+                                        placeholder="New password"
+                                        required=""
                                     >
+                                    @error('new_password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div><!--end col-->
@@ -192,15 +212,23 @@
                                     <i data-feather="key" class="fea icon-sm icons"></i>
                                     <input
                                         id="password_confirmation"
-                                        type="password" class="form-control ps-5" placeholder="Re-type New password"
+                                        name="password_confirmation"
+                                        type="password"
+                                        class="form-control ps-5 @error('password_confirmation') is-invalid @enderror"
+                                        placeholder="Re-type New password"
                                         required=""
                                     >
+                                    @error('password_confirmation')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div><!--end col-->
 
                         <div class="col-lg-12 mt-2 mb-0">
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" type="submit">
                                 {{ __('Save password') }}
                             </button>
                         </div><!--end col-->

@@ -23,9 +23,9 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::namespace('Backend')->group(function(){
-    Route::get('/change-password', function () {
-        return view('backend\user\change-password');
-    })->name('get-change-password');
+//    Route::get('/change-password', function () {
+//        return view('backend\user\change-password');
+//    })->name('get-change-password');
     Route::post('/change-password', 'ChangePasswordController@changePassword')
         ->name('post-change-password');
     Route::get('send-mail-change-password', 'SendEmailController@index')

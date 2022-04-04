@@ -321,7 +321,7 @@
                                         <small class="text-muted">UI / UX Designer</small>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="index.html">
+                                <a class="dropdown-item text-dark" href="{{ route('home') }}">
                                         <span class="mb-0 d-inline-block me-1">
                                             <i class="ti ti-home"></i>
                                         </span> {{ __('Dashboard') }}
@@ -331,11 +331,11 @@
                                             <i class="ti ti-settings"></i>
                                         </span> {{ __('Profile') }}
                                 </a>
-                                <a class="dropdown-item text-dark" href="{{ route('get-change-password') }}">
-                                        <span class="mb-0 d-inline-block me-1">
-                                            <i class="ti ti-shield-lock"></i>
-                                        </span> {{ __('Change Password') }}
-                                </a>
+{{--                                <a class="dropdown-item text-dark" href="{{ route('get-change-password') }}">--}}
+{{--                                        <span class="mb-0 d-inline-block me-1">--}}
+{{--                                            <i class="ti ti-shield-lock"></i>--}}
+{{--                                        </span> {{ __('Change Password') }}--}}
+{{--                                </a>--}}
                                 <div class="dropdown-divider border-top"></div>
                                 <a class="dropdown-item text-dark" href="lock-screen.html">
                                         <span class="mb-0 d-inline-block me-1">
