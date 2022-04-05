@@ -9,6 +9,7 @@
                 <div class="col-12">
                     <div class="form-signin p-4 bg-white rounded shadow">
                         <form method="POST" action="{{ route('register') }}">
+                            @csrf
                             <a href="{{ route('home') }}">
                                 <img
                                     src="{{ asset('templates/landrick/images/logo-icon.png') }}"
