@@ -144,7 +144,7 @@
                 {{--                        </div>--}}
                 {{--                    </li>--}}
 
-                <li><a href="{{ route('users.list') }}"><i class="ti ti-home me-2"></i>{{ __('User Management') }}</a></li>
+                <li><a href="{{ route('users.list') }}"><i class="ti ti-users me-2"></i>{{ __('User Management') }}</a></li>
             </ul>
             <!-- sidebar-menu  -->
         </div>

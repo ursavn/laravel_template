@@ -1,64 +1,67 @@
 @extends('layouts.app')
 
+@section('title')
+    {{ __('Create User') }}
+@endsection
+
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <form action="{{ route('users.store') }}" method="post">
-                    @csrf
-                    <div class="card">
-                        <div class="card-header">{{ __('Create User') }}</div>
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name">
-                                    @error('name')
+    <div class="row">
+        <div class="col-lg-12 mt-4">
+            <div class="card border-0 rounded shadow">
+                <div class="card-body">
+                    <form action="{{ route('users.store') }}" method="post">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="name" class="form-label">{{ __('Name') }}</label>
+                            <div class="position-relative">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name">
+                                @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
-                                <div class="col-md-6">
-                                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email">
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="new_password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-                                <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation">
-                                    @error('password_confirmation')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                                @enderror
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button class="btn btn-info" type="submit">Create</button>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">{{ __('Email') }}</label>
+                            <div class="position-relative">
+                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email">
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="mb-3">
+                            <label for="new_password" class="form-label">{{ __('Password') }}</label>
+                            <div class="form-icon position-relative">
+                                <i data-feather="key" class="fea icon-sm icons"></i>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
+                            <div class="form-icon position-relative">
+                                <i data-feather="key" class="fea icon-sm icons"></i>
+                                <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation">
+                                @error('password_confirmation')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">
+                            {{ __('Save') }}
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
