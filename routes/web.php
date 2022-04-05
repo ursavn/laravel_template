@@ -23,9 +23,9 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::namespace('Backend')->group(function(){
-    Route::get('/change-password', function () {
-        return view('backend\user\change-password');
-    })->name('get-change-password');
+//    Route::get('/change-password', function () {
+//        return view('backend\user\change-password');
+//    })->name('get-change-password');
     Route::post('/change-password', 'ChangePasswordController@changePassword')
         ->name('post-change-password');
     Route::get('send-mail-change-password', 'SendEmailController@index')
@@ -40,6 +40,7 @@ Route::namespace('Backend')->prefix('users')->name('users.')->group(function(){
     Route::get('/', 'UserController@getUserList')->name('list');
     Route::get('/detail/{id}', 'UserController@getDetailUser')->name('detail');
     Route::get('/edit/{id}', 'UserController@editUser')->name('edit');
+    Route::post('/update/{id}', 'UserController@updateUser')->name('update');
     Route::get('/create', 'UserController@create')->name('create');
     Route::post('/store', 'UserController@store')->name('store');
     Route::post('/active/{id}', 'UserController@changeUserActiveStatus')->name('active');
