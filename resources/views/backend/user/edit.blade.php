@@ -42,10 +42,15 @@
                                             name="name"
                                             id="name"
                                             type="text"
-                                            class="form-control ps-5"
+                                            class="form-control ps-5 @error('name') is-invalid @enderror"
                                             placeholder="Name :"
                                             value="{{ $user->name }}"
                                         >
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert" style="display: block">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div><!--end col-->
@@ -60,10 +65,15 @@
                                             name="email"
                                             id="email"
                                             type="email"
-                                            class="form-control ps-5"
+                                            class="form-control ps-5 @error('email') is-invalid @enderror"
                                             placeholder="Your email :"
                                             value="{{ $user->email }}"
                                         >
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert" style="display: block">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div><!--end col-->
