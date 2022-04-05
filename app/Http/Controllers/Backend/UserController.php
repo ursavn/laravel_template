@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsersRequest\ChangePasswordRequest;
 use App\Http\Requests\UsersRequest\CreateRequest;
+use App\Http\Requests\UsersRequest\UpdateRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -41,16 +42,18 @@ class UserController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param UpdateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request)
+    public function update(UpdateRequest $request)
     {
         $user = Auth::user();
+
         User::where('id', $user->id)
             ->update(['name' => $request->name, 'email' => $request->email]);
-        return back();
+
+        return redirect()->route('profile.edit')->with('success', 'Successfully');
     }
 
     /**
@@ -59,7 +62,7 @@ class UserController extends Controller
     public function getUserList() :view
     {
         $users = User::all();
-        return view('backend/users/list',compact('users'));
+        return view('backend/users/list', compact('users'));
     }
 
     /**
@@ -68,7 +71,12 @@ class UserController extends Controller
     public function getDetailUser($id) :view
     {
         $user = User::find($id);
-        return view('backend/users/detail',compact('user'));
+
+        if ($user) {
+            return view('backend/users/detail', compact('user'));
+        }
+
+        return redirect()->route('users.list')->with('error', 'Error');
     }
 
     /**
@@ -77,19 +85,34 @@ class UserController extends Controller
     public function editUser($id): View
     {
         $user = User::find($id);
-        return view('backend/users/edit',compact('user'));
+
+        if ($user) {
+            return view('backend/users/edit', compact('user'));
+        }
+
+        return redirect()->route('users.list')->with('error', 'Error');
     }
 
     /**
-     * @param Request $request
+     * @param UpdateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function updateUser(Request $request)
+    public function updateUser(UpdateRequest $request, $id)
     {
-        User::where('id', $request->id)
-            ->update(['name' => $request->name, 'email' => $request->email]);
-        return back();
+        $user = User::find($id);
+
+
+        if ($user) {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+
+            return redirect()->route('users.list')->with('success', 'Successfully');
+        }
+
+        return redirect()->route('users.list')->with('error', 'Error');
     }
 
     /**
@@ -115,7 +138,7 @@ class UserController extends Controller
 
         User::create($data);
 
-        return redirect()->route('users.list');
+        return redirect()->route('users.list')->with('success', 'Successfully');
     }
 
     /**
@@ -142,8 +165,14 @@ class UserController extends Controller
     public function changeUserActiveStatus(Request $request, $id)
     {
         $user = User::find($id);
-        $newStatus = $request->active == OFF ? 1 : 0;
-        $user->update(['active' => $newStatus]);
-        return redirect()->route('users.list');
+
+        if ($user) {
+            $newStatus = $request->active == OFF ? 1 : 0;
+            $user->update(['active' => $newStatus]);
+
+            return redirect()->route('users.list')->with('success', 'Successfully');
+        }
+
+        return redirect()->route('users.list')->with('error', 'Error');
     }
 }

@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <h2>User List</h2>
+        @include('includes.alert-block')
         <a class="btn btn-primary mb-3" href="{{ route('users.create') }}">Create</a>
         <table class="table">
             <thead>

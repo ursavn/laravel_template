@@ -143,6 +143,8 @@
                 {{--                            </ul>--}}
                 {{--                        </div>--}}
                 {{--                    </li>--}}
+
+                <li><a href="{{ route('users.list') }}"><i class="ti ti-home me-2"></i>{{ __('User Management') }}</a></li>
             </ul>
             <!-- sidebar-menu  -->
         </div>
@@ -544,6 +546,13 @@
 <!-- Main Js -->
 {{--    <script src="{{ asset('templates/landrick/js/plugins.init.js') }}"></script>--}}
 <script src="{{ asset('templates/landrick/js/app.js') }}"></script>
+
+<script>
+    setTimeout(function(){
+        $('.alert.alert-success.alert-block, .alert.alert-danger.alert-block').remove();
+    }, 2000 );
+</script>
+
 @yield('footer-scripts')
 </body>
 </html>
