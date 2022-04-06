@@ -61,7 +61,7 @@ class UserController extends Controller
      */
     public function getUserList() :view
     {
-        $users = User::paginate(20);
+        $users = User::all();
         return view('backend/users/list', compact('users'));
     }
 
