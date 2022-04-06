@@ -127,13 +127,21 @@
                         alt=""
                     >
                     <span class="sidebar-colored">
-                            <img src="{{ asset('templates/landrick/images/logo-light.png') }}" height="24" alt="">
-                        </span>
+                        <img
+                            src="{{ asset('templates/landrick/images/logo-light.png') }}"
+                            height="24"
+                            alt=""
+                        >
+                    </span>
                 </a>
             </div>
 
             <ul class="sidebar-menu">
-                <li><a href="{{ route('home') }}"><i class="ti ti-home me-2"></i>{{ __('Dashboard') }}</a></li>
+                <li>
+                    <a href="{{ route('home') }}">
+                        <i class="ti ti-home me-2"></i>{{ __('Dashboard') }}
+                    </a>
+                </li>
                 {{--                    <li class="sidebar-dropdown">--}}
                 {{--                        <a href="javascript:void(0)"><i class="ti ti-user me-2"></i>User Profile</a>--}}
                 {{--                        <div class="sidebar-submenu">--}}
@@ -144,7 +152,23 @@
                 {{--                        </div>--}}
                 {{--                    </li>--}}
 
-                <li><a href="{{ route('users.list') }}"><i class="ti ti-users me-2"></i>{{ __('User Management') }}</a></li>
+                <li class="sidebar-dropdown @if(Request::route()->getName() == 'users.list' || Request::route()->getName() == 'users.create') active @endif">
+                    <a href="javascript:void(0)"><i class="ti ti-users me-2"></i>{{ __('User Management') }}</a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="{{ route('users.list') }}">
+                                    {{ __('User List') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('users.create') }}">
+                                    {{ __('Add a new User') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
             <!-- sidebar-menu  -->
         </div>
@@ -333,11 +357,11 @@
                                             <i class="ti ti-settings"></i>
                                         </span> {{ __('Profile') }}
                                 </a>
-{{--                                <a class="dropdown-item text-dark" href="{{ route('get-change-password') }}">--}}
-{{--                                        <span class="mb-0 d-inline-block me-1">--}}
-{{--                                            <i class="ti ti-shield-lock"></i>--}}
-{{--                                        </span> {{ __('Change Password') }}--}}
-{{--                                </a>--}}
+                                {{--                                <a class="dropdown-item text-dark" href="{{ route('get-change-password') }}">--}}
+                                {{--                                        <span class="mb-0 d-inline-block me-1">--}}
+                                {{--                                            <i class="ti ti-shield-lock"></i>--}}
+                                {{--                                        </span> {{ __('Change Password') }}--}}
+                                {{--                                </a>--}}
                                 <div class="dropdown-divider border-top"></div>
                                 <a class="dropdown-item text-dark" href="lock-screen.html">
                                         <span class="mb-0 d-inline-block me-1">
@@ -548,9 +572,9 @@
 <script src="{{ asset('templates/landrick/js/app.js') }}"></script>
 
 <script>
-    setTimeout(function(){
+    setTimeout(function() {
         $('.alert.alert-success.alert-block, .alert.alert-danger.alert-block').remove();
-    }, 2000 );
+    }, 2000);
 </script>
 
 @yield('footer-scripts')
