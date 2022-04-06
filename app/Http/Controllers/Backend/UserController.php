@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -84,10 +85,12 @@ class UserController extends Controller
      */
     public function editUser($id): View
     {
-        $user = User::find($id);
+        $user = User::with('roles')->where('id', $id)->first();
 
         if ($user) {
-            return view('backend/users/edit', compact('user'));
+            $roles = Role::all();
+
+            return view('backend/users/edit', compact(['user', 'roles']));
         }
 
         return redirect()->route('users.list')->with('error', 'Error');
@@ -102,12 +105,14 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-
         if ($user) {
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email
             ]);
+
+            $user->removeRole($user->roles->first());
+            $user->assignRole($request->role);
 
             return redirect()->route('users.list')->with('success', 'Successfully');
         }
