@@ -33,6 +33,25 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ __('Role') }}</label>
+                        <div class="position-relative">
+                            <select class="form-control @error('email') is-invalid @enderror" name="role">
+                                @foreach($roles as $role)
+                                    <option value="{{ $role->name }}"
+                                        @if($role->name == $user->roles[0]->name)
+                                            selected
+                                        @endif
+                                    >{{ $role->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
                     <button class="btn btn-primary" type="submit">
                         {{ __('Save') }}
                     </button>
