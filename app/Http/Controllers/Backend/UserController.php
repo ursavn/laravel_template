@@ -111,7 +111,7 @@ class UserController extends Controller
                 'email' => $request->email
             ]);
 
-            $user->removeRole($user->roles->first());
+            if ($user->roles->first()) $user->removeRole($user->roles->first());
             $user->assignRole($request->role);
 
             return redirect()->route('users.list')->with('success', 'Successfully');
