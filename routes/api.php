@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,14 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::post('/change-password', [AuthController::class, 'changePassWord']);
+});
+
+Route::group(['middleware' => 'api', 'prefix' => 'users'], function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::get('/{id}', [UserController::class, 'show']);
+    Route::post('/store', [UserController::class, 'store']);
+    Route::post('/update/{id}', [UserController::class, 'update']);
+    Route::post('/change-password/{id}', [UserController::class, 'changePassword']);
+    Route::post('/change-permission/{id}', [UserController::class, 'changePermission']);
+    Route::post('active/{id}', [UserController::class, 'active']);
 });
