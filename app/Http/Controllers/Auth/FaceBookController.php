@@ -8,9 +8,6 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class FaceBookController extends Controller
 {
@@ -43,21 +40,4 @@ class FaceBookController extends Controller
             return false;
         }
     }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function token(){
-//        $token = JWTAuth::getToken();
-//        if(!$token){
-//            return false;
-//            throw new BadRequestHtttpException('Token not provided');
-//        }
-//        try{
-//            $token = JWTAuth::refresh($token);
-//        }catch(TokenInvalidException $e){
-//            throw new AccessDeniedHttpException('The token is invalid');
-//        }
-//        return $this->response->withArray(['token'=>$token]);
-//    }
 }
