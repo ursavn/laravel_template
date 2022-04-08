@@ -25,6 +25,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
+    Route::post('/update-user-profile', [AuthController::class, 'updateUserProfile']);
     Route::post('/change-password', [AuthController::class, 'changePassWord']);
 });
 
@@ -35,5 +36,5 @@ Route::group(['middleware' => 'api', 'prefix' => 'users'], function () {
     Route::post('/update/{id}', [UserController::class, 'update']);
     Route::post('/change-password/{id}', [UserController::class, 'changePassword']);
     Route::post('/change-permission/{id}', [UserController::class, 'changePermission']);
-    Route::post('active/{id}', [UserController::class, 'active']);
+    Route::post('/active/{id}', [UserController::class, 'active']);
 });
