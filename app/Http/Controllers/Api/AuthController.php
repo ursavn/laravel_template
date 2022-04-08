@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\AuthRequest\RegisterRequest;
+use App\Http\Requests\Api\AuthRequest\UpdateProfileRequest;
 use App\Http\Requests\Api\ChangePasswordRequest;
 use App\Http\Requests\Api\RegisterRequest;
 use Illuminate\Http\JsonResponse;
@@ -96,6 +98,26 @@ class AuthController extends Controller
     public function userProfile(): JsonResponse
     {
         return response()->json(auth()->user());
+    }
+
+    /**
+     * Get the authenticated User.
+     *
+     * @return JsonResponse
+     */
+    public function updateUserProfile(UpdateProfileRequest $request): JsonResponse
+    {
+        $user = auth()->user();
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email
+        ]);
+
+        return response()->json([
+            'message' => 'Profile successfully updated',
+            'user' => $user
+        ]);
     }
 
     /**

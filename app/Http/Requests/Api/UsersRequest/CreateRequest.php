@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\UsersRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
-class RegisterRequest extends FormRequest
+class CreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -24,7 +24,7 @@ class RegisterRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [
             'name' => ['required', 'string', 'max:255'],
