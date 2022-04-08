@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\ChangePasswordRequest;
 use App\Http\Requests\Api\RegisterRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -118,16 +119,8 @@ class AuthController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function changePassWord(Request $request): JsonResponse
+    public function changePassword(ChangePasswordRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'old_password' => 'required|string|min:6',
-            'new_password' => 'required|string|confirmed|min:6',
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
         $userId = auth()->user()->id;
 
         $user = User::where('id', $userId)->update(
