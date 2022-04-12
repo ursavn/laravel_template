@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
+Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -27,6 +27,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::post('/change-password', [AuthController::class, 'changePassword']);
     Route::post('/update-user-profile', [AuthController::class, 'updateUserProfile']);
+    Route::post('login-facebook', [AuthController::class, 'loginWithFacebook']);
+    Route::post('login-google', [AuthController::class, 'loginWithGoogle']);
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'users'], function () {
