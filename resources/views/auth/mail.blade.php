@@ -6,7 +6,7 @@
         <div class="bg-overlay bg-overlay-white"></div>
         <div class="container">
             <div class="row">
-                Your code is rekj23
+                Your code is {{ $otpCode }}
             </div>
         </div> <!--end container-->
     </section><!--end section-->
