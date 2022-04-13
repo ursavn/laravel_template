@@ -9,7 +9,6 @@ use App\Http\Requests\Api\ChangePasswordRequest;
 use App\Http\Requests\SendMailRequest;
 use App\Mail\NotifyMail;
 use App\Models\PasswordReset;
-use DateInterval;
 use Facebook\Facebook;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,7 +18,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Nette\Utils\DateTime;
 use Tymon\JWTAuth\JWTAuth;
 
 class AuthController extends Controller
