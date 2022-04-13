@@ -12,6 +12,7 @@ use Facebook\Facebook;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -149,15 +150,26 @@ class AuthController extends Controller
      */
     public function changePassword(ChangePasswordRequest $request): JsonResponse
     {
-        $userId = auth()->user()->id;
+        $user = auth()->user();
 
-        $user = User::where('id', $userId)->update(
+        if (!(Hash::check($request->current_password, $user->password))) {
+            return response()->json([
+                'message' => 'The current password is incorrect.',
+            ], 401);
+        }
+
+        if (strcmp($request->current_password, $request->new_password) == false) {
+            return response()->json([
+                'message' => 'The new password is the same as the current password.',
+            ], 401);
+        }
+
+        User::where('id', $user->id)->update(
             ['password' => bcrypt($request->new_password)]
         );
 
         return response()->json([
             'message' => 'User successfully changed password',
-            'user' => $user,
         ], 201);
     }
 
