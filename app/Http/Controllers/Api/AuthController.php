@@ -8,6 +8,8 @@ use App\Http\Requests\Api\AuthRequest\UpdateProfileRequest;
 use App\Http\Requests\Api\ChangePasswordRequest;
 use App\Http\Requests\SendMailRequest;
 use App\Mail\NotifyMail;
+use App\Models\PasswordReset;
+use DateInterval;
 use Facebook\Facebook;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Nette\Utils\DateTime;
 use Tymon\JWTAuth\JWTAuth;
 
 class AuthController extends Controller
@@ -265,8 +268,49 @@ class AuthController extends Controller
      */
     public function sendMailChangePassword(SendMailRequest $request): JsonResponse
     {
-        Mail::to($request->email)->send(new NotifyMail());
+        $otpCode = mt_rand(OTP_CODE_MIN, OTP_CODE_MAX);
+
+        Mail::to($request->email)->send(new NotifyMail($otpCode));
+
+        PasswordReset::create([
+            'email' => $request->email,
+            'otp_code' => $otpCode
+        ]);
 
         return response()->json(['message' => 'Great! Successfully send in your mail']);
+    }
+
+    /**
+     * @param SendMailRequest $request
+     * @return JsonResponse
+     */
+    public function confirmOtp(Request $request): JsonResponse
+    {
+        $user = Auth::user();
+
+        $passwordResetQuery = PasswordReset::where('email', $user->email)
+                        ->orderBy('created_at', 'desc');
+
+        $passwordReset = $passwordResetQuery->first();
+
+        if ($passwordReset) {
+            if ($request->otp_code === $passwordReset->otp_code) {
+                $now    = date('Y-m-d H:i:s');
+                $expiry = $passwordReset->created_at;
+                $expiry = date('Y-m-d H:i:s', strtotime('+' . OTP_CODE_EXPIRY, strtotime($expiry)));
+
+                if ($now <= $expiry) {
+                    $passwordResetQuery->delete();
+
+                    return response()->json(['message' => 'OTP is currect']);
+                }
+
+                return response()->json(['message' => 'OTP has expired'], 401);
+            }
+
+            return response()->json(['message' => 'OTP is not currect'], 401);
+        }
+
+        return response()->json(['message' => 'not found data'], 404);
     }
 }
