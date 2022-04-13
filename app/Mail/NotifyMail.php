@@ -28,6 +28,6 @@ class NotifyMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.auth.mail');
+        return $this->view('auth.mail');
     }
 }

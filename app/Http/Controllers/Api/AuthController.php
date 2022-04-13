@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\AuthRequest\RegisterRequest;
 use App\Http\Requests\Api\AuthRequest\UpdateProfileRequest;
 use App\Http\Requests\Api\ChangePasswordRequest;
+use App\Http\Requests\SendMailRequest;
+use App\Mail\NotifyMail;
 use Facebook\Facebook;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\JWTAuth;
 
@@ -242,5 +245,16 @@ class AuthController extends Controller
             Log::error('Error when login with google: ' . $e->getMessage());
             return response()->json(['message' => 'Login google failed',], 401);
         }
+    }
+
+    /**
+     * @param SendMailRequest $request
+     * @return JsonResponse
+     */
+    public function sendMailChangePassword(SendMailRequest $request): JsonResponse
+    {
+        Mail::to($request->email)->send(new NotifyMail());
+
+        return response()->json(['message' => 'Great! Successfully send in your mail']);
     }
 }

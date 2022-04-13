@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\SendMailRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotifyMail;
 
@@ -22,13 +22,10 @@ class SendMailController extends Controller
     /**
      * @return mixed
      */
-    public function index(Request $request): mixed
+    public function index(SendMailRequest $request): mixed
     {
         Mail::to($request->email)->send(new NotifyMail());
-        if (Mail::failures()) {
-            return response()->Fail('Sorry! Please try again latter');
-        }else{
-            return response()->success('Great! Successfully send in your mail');
-        }
+
+        return response()->success('Great! Successfully send in your mail');
     }
 }
