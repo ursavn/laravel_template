@@ -37,9 +37,10 @@
                         <label class="form-label">{{ __('Role') }}</label>
                         <div class="position-relative">
                             <select class="form-control @error('email') is-invalid @enderror" name="role">
+                                <option value=""></option>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->name }}"
-                                        @if($role->name == $user->roles[0]->name)
+                                        @if(isset($user->roles[0]) && $user->roles[0]->name == $role->name)
                                             selected
                                         @endif
                                     >{{ $role->name }}</option>
