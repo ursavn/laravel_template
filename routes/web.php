@@ -36,17 +36,19 @@ Route::namespace('Backend')->group(function(){
 });
 
 Route::namespace('Backend')->prefix('users')->name('users.')->group(function(){
-    Route::get('/{id}/change-password', function ($id) {
-        return view('backend\users\change-password', compact('id'));
-    })->name('get-change-password');
-    Route::post('/{id}/change-password', [UserController::class, 'changePassword'])->name('post-change-password');
-    Route::get('/', [UserController::class, 'getUserList'])->name('list');
-    Route::get('/detail/{id}', [UserController::class, 'getDetailUser'])->name('detail');
-    Route::get('/edit/{id}', [UserController::class, 'editUser'])->name('edit');
-    Route::post('/update/{id}', [UserController::class, 'updateUser'])->name('update');
-    Route::get('/create', [UserController::class, 'create'])->name('create');
-    Route::post('/store', [UserController::class, 'store'])->name('store');
-    Route::post('/active/{id}', [UserController::class, 'changeUserActiveStatus'])->name('active');
+    Route::group(['middleware' => ['role:super-admin|admin']], function() {
+        Route::get('/{id}/change-password', function ($id) {
+            return view('backend\users\change-password', compact('id'));
+        })->name('get-change-password');
+        Route::post('/{id}/change-password', [UserController::class, 'changePassword'])->name('post-change-password');
+        Route::get('/', [UserController::class, 'getUserList'])->name('list');
+        Route::get('/detail/{id}', [UserController::class, 'getDetailUser'])->name('detail');
+        Route::get('/edit/{id}', [UserController::class, 'editUser'])->name('edit');
+        Route::post('/update/{id}', [UserController::class, 'updateUser'])->name('update');
+        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::post('/active/{id}', [UserController::class, 'changeUserActiveStatus'])->name('active');
+    });
 });
 
 Route::namespace('Backend')->prefix('profile')->name('profile.')->group(function(){
@@ -56,8 +58,10 @@ Route::namespace('Backend')->prefix('profile')->name('profile.')->group(function
 });
 
 Route::namespace('Backend')->prefix('setting')->name('setting.')->group(function(){
-    Route::get('/', [SettingController::class, 'index'])->name('list');
-    Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
+    Route::group(['middleware' => ['role:super-admin|admin']], function() {
+        Route::get('/', [SettingController::class, 'index'])->name('list');
+        Route::post('/update/{id}', [UserController::class, 'update'])->name('update');
+    });
 });
 
 //facebook login
