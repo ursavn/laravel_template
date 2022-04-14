@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\AuthRequest\RegisterRequest;
 use App\Http\Requests\Api\AuthRequest\UpdateProfileRequest;
 use App\Http\Requests\Api\ChangePasswordRequest;
+use App\Http\Requests\Api\UsersRequest\ChangePasswordRequest as ResetPasswordRequest;
 use App\Http\Requests\SendMailRequest;
 use App\Mail\NotifyMail;
 use App\Models\PasswordReset;
@@ -307,6 +308,28 @@ class AuthController extends Controller
             }
 
             return response()->json(['message' => 'OTP is not currect'], 401);
+        }
+
+        return response()->json(['message' => 'not found data'], 404);
+    }
+
+    /**
+     * @param ResetPasswordRequest $request
+     * @return JsonResponse
+     */
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            $user->update([
+                'password' => bcrypt($request->new_password)
+            ]);
+
+            return response()->json([
+                'message' => 'User successfully changed password',
+                'user' => $user
+            ]);
         }
 
         return response()->json(['message' => 'not found data'], 404);
