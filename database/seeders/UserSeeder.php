@@ -19,11 +19,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => 'Administrator',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('123456'),
-            'email_verified_at' => Carbon::now()
-        ]);
+//        DB::table('users')->insert([
+//            'name' => 'Administrator',
+//            'email' => 'admin@example.com',
+//            'password' => Hash::make('123456'),
+//            'email_verified_at' => Carbon::now()
+//        ]);
     }
 }

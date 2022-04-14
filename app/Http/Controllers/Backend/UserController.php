@@ -30,7 +30,7 @@ class UserController extends Controller
     public function index(): View
     {
         $user = Auth::user();
-        return view('backend/user/profile',compact('user'));
+        return view('backend/profile/profile',compact('user'));
     }
 
     /**
@@ -39,7 +39,7 @@ class UserController extends Controller
     public function edit(): View
     {
         $user = Auth::user();
-        return view('backend/user/edit',compact('user'));
+        return view('backend/profile/edit',compact('user'));
     }
 
     /**
