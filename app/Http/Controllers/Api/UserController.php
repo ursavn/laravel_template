@@ -74,9 +74,9 @@ class UserController extends Controller
      *
      * @return JsonResponse
      */
-    public function update(UpdateRequest $request, $id): JsonResponse
+    public function update(UpdateRequest $request): JsonResponse
     {
-        $user = User::find($id);
+        $user = User::find($request->id);
 
         if ($user) {
             $user->update([
@@ -98,9 +98,9 @@ class UserController extends Controller
      *
      * @return JsonResponse
      */
-    public function changePassword(ChangePasswordRequest $request, $id): JsonResponse
+    public function changePassword(ChangePasswordRequest $request): JsonResponse
     {
-        $user = User::find($id);
+        $user = User::find($request->id);
 
         if ($user) {
             $user->update([
@@ -121,9 +121,9 @@ class UserController extends Controller
      *
      * @return JsonResponse
      */
-    public function changePermission(Request $request, $id): JsonResponse
+    public function changePermission(Request $request): JsonResponse
     {
-        $user = User::find($id);
+        $user = User::find($request->id);
 
         if ($user) {
             if ($user->roles->first()) $user->removeRole($user->roles->first());
@@ -144,9 +144,9 @@ class UserController extends Controller
      *
      * @return JsonResponse
      */
-    public function active(Request $request, $id): JsonResponse
+    public function active(Request $request): JsonResponse
     {
-        $user = User::find($id);
+        $user = User::find($request->id);
 
         if ($user) {
             $status = $request->active == OFF ? 1 : 0;
