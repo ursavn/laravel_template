@@ -31,6 +31,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
     Route::post('login-google', [AuthController::class, 'loginWithGoogle']);
     Route::post('send-mail-change-password', [AuthController::class, 'sendMailChangePassword']);
     Route::post('confirm-otp', [AuthController::class, 'confirmOtp']);
+    Route::post('reset-password', [AuthController::class, 'resetPassword']);
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'users'], function () {
