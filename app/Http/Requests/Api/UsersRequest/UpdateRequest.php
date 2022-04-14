@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('id');
+        $id = $this->request->get('id');
 
         return [
             'name' => ['required', 'string', 'max:255'],
