@@ -70,6 +70,8 @@ class AuthController extends Controller
             ]
         );
 
+        $user->assignRole(USER_ROLE);
+
         return response()->json([
             'message' => 'User successfully registered',
             'user' => $user
@@ -285,9 +287,7 @@ class AuthController extends Controller
      */
     public function confirmOtp(Request $request): JsonResponse
     {
-        $user = Auth::user();
-
-        $passwordResetQuery = PasswordReset::where('email', $user->email)
+        $passwordResetQuery = PasswordReset::where('email', $request->email)
                         ->orderBy('created_at', 'desc');
 
         $passwordReset = $passwordResetQuery->first();
