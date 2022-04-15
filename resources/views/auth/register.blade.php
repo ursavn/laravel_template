@@ -28,7 +28,6 @@
                                     id="floatingName"
                                     placeholder="Harry"
                                     value="{{ old('name') }}"
-                                    required
                                     autofocus
                                     autocomplete="name"
                                 />
@@ -48,7 +47,6 @@
                                     id="floatingEmail"
                                     placeholder="name@example.com"
                                     value="{{ old('email') }}"
-                                    required
                                     autocomplete="email"
                                 />
                                 <label for="floatingEmail">
@@ -68,7 +66,6 @@
                                     class="form-control @error('password') is-invalid @enderror"
                                     id="floatingPassword"
                                     placeholder="Password"
-                                    required
                                     autocomplete="password"
                                 >
                                 <label for="floatingPassword">
@@ -85,15 +82,19 @@
                                 <input
                                     type="password"
                                     name="password_confirmation"
-                                    class="form-control"
+                                    class="form-control @error('password_confirmation') is-invalid @enderror"
                                     id="floatingConfirmPassword"
                                     placeholder="Confirm Password"
-                                    required
                                     autocomplete="confirm-password"
                                 >
                                 <label for="floatingConfirmPassword">
                                     {{ __('Confirm Password') }}
                                 </label>
+                                @error('password_confirmation')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="form-check mb-3">
