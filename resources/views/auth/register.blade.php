@@ -106,7 +106,7 @@
                                 </label>
                             </div>
 
-                            <button class="btn btn-primary w-100" type="submit">
+                            <button class="btn btn-primary w-100" type="submit" onclick="this.disabled=true;this.form.submit();">
                                 {{ __('Register') }}
                             </button>
 

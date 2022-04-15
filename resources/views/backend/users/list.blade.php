@@ -21,6 +21,9 @@
                         <th class="text-center border-bottom p-3" style="min-width: 200px;">
                             {{ __('Email') }}
                         </th>
+                        <th class="text-center border-bottom p-3" style="min-width: 200px;">
+                            {{ __('Role') }}
+                        </th>
                         <th class="text-end border-bottom p-3" style="min-width: 200px;"></th>
                     </tr>
                     </thead>
@@ -38,14 +41,23 @@
                                             src="{{ __('templates/landrick/images/client/01.jpg') }}"
                                             class="avatar avatar-ex-small rounded-circle shadow" alt=""
                                         >
-                                        <span class="ms-2">
-                                            {{ $user->name }}
-                                        </span>
+                                        @if (mb_strlen($user->name) > 50)
+                                            <span class="ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                {{ mb_substr($user->name, 0, 50).'...' }}
+                                            </span>
+                                        @else
+                                            <span class="ms-2">
+                                                {{ $user->name }}
+                                            </span>
+                                        @endif
                                     </div>
                                 </a>
                             </td>
                             <td class="text-center p-3">
                                 {{ $user->email }}
+                            </td>
+                            <td class="text-center p-3">
+                                {{ isset($user->roles[0]) ? $user->roles[0]->name : '' }}
                             </td>
                             <td class="d-flex justify-content-end p-3">
                                 <a
@@ -98,19 +110,7 @@
         </div><!--end col-->
     </div><!--end row-->
 
-    <div class="row text-center">
-        <!-- PAGINATION START -->
-        <div class="col-12 mt-4">
-            <div class="d-md-flex align-items-center text-center justify-content-between">
-                <span class="text-muted me-3">Showing 1 - 10 out of 50</span>
-                <ul class="pagination mb-0 justify-content-center mt-4 mt-sm-0">
-                    <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Previous">Prev</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next</a></li>
-                </ul>
-            </div>
-        </div><!--end col-->
-        <!-- PAGINATION END -->
-    </div><!--end row-->
+    @if ($users->lastPage() > 1)
+        {{ $users->links('includes.pagination') }}
+    @endif
 @endsection

@@ -343,9 +343,13 @@
                                         class="avatar avatar-md-sm rounded-circle border shadow" alt=""
                                     >
                                     <div class="flex-1 ms-2">
-                                            <span class="d-block">
+                                        <span class="d-block">
+                                            @if (mb_strlen(Auth::user()->name) > 13)
+                                                {{ mb_substr(Auth::user()->name, 0, 13).'...' }}
+                                            @else
                                                 {{ Auth::user()->name }}
-                                            </span>
+                                            @endif
+                                        </span>
                                         <small class="text-muted">UI / UX Designer</small>
                                     </div>
                                 </a>
@@ -391,7 +395,7 @@
         <div class="container-fluid">
             <div class="layout-specing">
                 <div class="d-flex align-items-center justify-content-between">
-                    <div>
+                    <div style="word-break: break-word;">
                         <h6 class="text-muted mb-1">Welcome back, {{ Auth::user()->name }}!</h6>
                         <h5 class="mb-0">@yield('title')</h5>
                     </div>
