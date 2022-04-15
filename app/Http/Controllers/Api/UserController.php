@@ -38,12 +38,11 @@ class UserController extends Controller
      *
      * @return JsonResponse
      */
-    public function show($id): JsonResponse
+    public function show(Request $request): JsonResponse
     {
-        $user = User::find($id);
+        $user = User::find($request->id);
 
         if ($user) {
-
             return response()->json($user);
         }
 
