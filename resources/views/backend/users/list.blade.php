@@ -38,9 +38,15 @@
                                             src="{{ __('templates/landrick/images/client/01.jpg') }}"
                                             class="avatar avatar-ex-small rounded-circle shadow" alt=""
                                         >
-                                        <span class="ms-2">
-                                            {{ $user->name }}
-                                        </span>
+                                        @if (strlen($user->name) > 50)
+                                            <span class="ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
+                                                {{ substr($user->name, 0, 50).'...' }}
+                                            </span>
+                                        @else
+                                            <span class="ms-2">
+                                                {{ $user->name }}
+                                            </span>
+                                        @endif
                                     </div>
                                 </a>
                             </td>
