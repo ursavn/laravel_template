@@ -5,5 +5,9 @@
 @endsection
 
 @section('content')
-    {{ __('You are logged in!') }}
+    @if(auth()->user()->active === ON)
+        {{ __('You are logged in!') }}
+    @else
+        {{ __('Your account is inactive!') }}
+    @endif
 @endsection
