@@ -11,6 +11,7 @@
                 <div class="card-body">
                     <div>Name: {{ $user->name }}</div>
                     <div>Email: {{ $user->email }}</div>
+                    <div>Role: {{ isset($user->roles[0]) ? $user->roles[0]->name : '' }}</div>
                 </div>
 
                 <div class="card-footer">
