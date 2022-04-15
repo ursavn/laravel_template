@@ -35,11 +35,13 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'users'], function () {
-    Route::get('/', [UserController::class, 'index']);
-    Route::get('/{id}', [UserController::class, 'show']);
-    Route::post('/store', [UserController::class, 'store']);
-    Route::post('/update', [UserController::class, 'update']);
-    Route::post('/change-password', [UserController::class, 'changePassword']);
-    Route::post('/change-permission', [UserController::class, 'changePermission']);
-    Route::post('/active', [UserController::class, 'active']);
+    Route::group(['middleware' => ['role:super-admin|admin']], function() {
+        Route::get('/', [UserController::class, 'index']);
+        Route::get('/show', [UserController::class, 'show']);
+        Route::post('/store', [UserController::class, 'store']);
+        Route::post('/update', [UserController::class, 'update']);
+        Route::post('/change-password', [UserController::class, 'changePassword']);
+        Route::post('/change-permission', [UserController::class, 'changePermission']);
+        Route::post('/active', [UserController::class, 'active']);
+    });
 });
