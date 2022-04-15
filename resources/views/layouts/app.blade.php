@@ -152,23 +152,25 @@
                 {{--                        </div>--}}
                 {{--                    </li>--}}
 
-                <li class="sidebar-dropdown @if(Request::route()->getName() == 'users.list' || Request::route()->getName() == 'users.create') active @endif">
-                    <a href="javascript:void(0)"><i class="ti ti-users me-2"></i>{{ __('User Management') }}</a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="{{ route('users.list') }}">
-                                    {{ __('User List') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('users.create') }}">
-                                    {{ __('Add a new User') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @role('super-admin|admin')
+                    <li class="sidebar-dropdown @if(Request::route()->getName() == 'users.list' || Request::route()->getName() == 'users.create') active @endif">
+                        <a href="javascript:void(0)"><i class="ti ti-users me-2"></i>{{ __('User Management') }}</a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a href="{{ route('users.list') }}">
+                                        {{ __('User List') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('users.create') }}">
+                                        {{ __('Add a new User') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endrole
             </ul>
             <!-- sidebar-menu  -->
         </div>

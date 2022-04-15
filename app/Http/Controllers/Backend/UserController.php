@@ -8,6 +8,7 @@ use App\Http\Requests\UsersRequest\CreateRequest;
 use App\Http\Requests\UsersRequest\UpdateRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -44,10 +45,9 @@ class UserController extends Controller
 
     /**
      * @param UpdateRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @return RedirectResponse
      */
-    public function update(UpdateRequest $request)
+    public function update(UpdateRequest $request): RedirectResponse
     {
         $user = Auth::user();
 
@@ -67,9 +67,10 @@ class UserController extends Controller
     }
 
     /**
-     * @return View
+     * @param $id
+     * @return RedirectResponse|View
      */
-    public function getDetailUser($id) :view
+    public function getDetailUser($id) :RedirectResponse|view
     {
         $user = User::find($id);
 
@@ -81,9 +82,10 @@ class UserController extends Controller
     }
 
     /**
-     * @return View
+     * @param $id
+     * @return RedirectResponse|View
      */
-    public function editUser($id): View
+    public function editUser($id): RedirectResponse|View
     {
         $user = User::with('roles')->where('id', $id)->first();
 
@@ -98,10 +100,10 @@ class UserController extends Controller
 
     /**
      * @param UpdateRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @param $id
+     * @return RedirectResponse
      */
-    public function updateUser(UpdateRequest $request, $id)
+    public function updateUser(UpdateRequest $request, $id): RedirectResponse
     {
         $user = User::find($id);
 
@@ -130,10 +132,9 @@ class UserController extends Controller
 
     /**
      * @param CreateRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @return RedirectResponse
      */
-    public function store(CreateRequest $request)
+    public function store(CreateRequest $request): RedirectResponse
     {
         $data = [
             'name' => $request['name'],
@@ -147,9 +148,11 @@ class UserController extends Controller
     }
 
     /**
-     * @return View
+     * @param $id
+     * @return RedirectResponse|View
      */
-    public function getChangePassword($id) {
+    public function getChangePassword($id): RedirectResponse|View
+    {
         $user = User::find($id);
 
         if ($user) {
@@ -161,10 +164,11 @@ class UserController extends Controller
 
     /**
      * @param ChangePasswordRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @param $id
+     * @return RedirectResponse
      */
-    public function postChangePassword(ChangePasswordRequest $request, $id) {
+    public function postChangePassword(ChangePasswordRequest $request, $id): RedirectResponse
+    {
         $user = User::find($id);
 
         if ($user) {
@@ -180,7 +184,12 @@ class UserController extends Controller
         return redirect()->route('users.get-change-password', $id)->with('error', 'Not found data');
     }
 
-    public function changeUserActiveStatus(Request $request, $id)
+    /**
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function changeUserActiveStatus(Request $request, $id): RedirectResponse
     {
         $user = User::find($id);
 
