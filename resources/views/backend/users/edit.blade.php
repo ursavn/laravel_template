@@ -36,7 +36,7 @@
                     <div class="mb-3">
                         <label class="form-label">{{ __('Role') }}</label>
                         <div class="position-relative">
-                            <select class="form-control @error('email') is-invalid @enderror" name="role">
+                            <select class="form-control @error('role') is-invalid @enderror" name="role">
                                 <option value=""></option>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->name }}"
@@ -46,7 +46,7 @@
                                     >{{ $role->name }}</option>
                                 @endforeach
                             </select>
-                            @error('email')
+                            @error('role')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

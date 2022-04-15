@@ -34,6 +34,16 @@
                             </div>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">{{ __('Role') }}</label>
+                            <div class="position-relative">
+                                <select class="form-control" name="role">
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
                             <label for="new_password" class="form-label">{{ __('Password') }}</label>
                             <div class="form-icon position-relative">
                                 <i data-feather="key" class="fea icon-sm icons"></i>

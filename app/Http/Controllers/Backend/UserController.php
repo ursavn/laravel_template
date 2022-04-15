@@ -62,7 +62,8 @@ class UserController extends Controller
      */
     public function getUserList() :view
     {
-        $users = User::all();
+        $users = User::with('roles')->paginate(PAGINATE_NUM);
+
         return view('backend/users/list', compact('users'));
     }
 
@@ -72,7 +73,7 @@ class UserController extends Controller
      */
     public function getDetailUser($id) :RedirectResponse|view
     {
-        $user = User::find($id);
+        $user = User::with('roles')->where('id', $id)->first();
 
         if ($user) {
             return view('backend/users/detail', compact('user'));
@@ -127,7 +128,9 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view('backend/users/create');
+        $roles = Role::all();
+
+        return view('backend/users/create', compact('roles'));
     }
 
     /**
@@ -140,9 +143,11 @@ class UserController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
+            'email_verified_at' => now()
         ];
 
-        User::create($data);
+        $user = User::create($data);
+        $user->assignRole($request->role);
 
         return redirect()->route('users.list')->with('success', 'Successfully');
     }
