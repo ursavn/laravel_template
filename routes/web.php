@@ -37,10 +37,8 @@ Route::namespace('Backend')->group(function(){
 
 Route::namespace('Backend')->prefix('users')->name('users.')->group(function(){
     Route::group(['middleware' => ['role:super-admin|admin']], function() {
-        Route::get('/{id}/change-password', function ($id) {
-            return view('backend\users\change-password', compact('id'));
-        })->name('get-change-password');
-        Route::post('/{id}/change-password', [UserController::class, 'changePassword'])->name('post-change-password');
+        Route::get('/{id}/change-password', [UserController::class, 'getChangePassword'])->name('get-change-password');
+        Route::post('/{id}/change-password', [UserController::class, 'postChangePassword'])->name('post-change-password');
         Route::get('/', [UserController::class, 'getUserList'])->name('list');
         Route::get('/detail/{id}', [UserController::class, 'getDetailUser'])->name('detail');
         Route::get('/edit/{id}', [UserController::class, 'editUser'])->name('edit');
