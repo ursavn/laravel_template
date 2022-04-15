@@ -59,8 +59,11 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'email_verified_at' => now()
         ]);
+
+        $user->assignRole($request->role);
 
         return response()->json([
             'message' => 'User successfully created',
@@ -82,6 +85,9 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email
             ]);
+
+            if ($user->roles->first()) $user->removeRole($user->roles->first());
+            $user->assignRole($request->role);
 
             return response()->json([
                 'message' => 'User successfully updated',
