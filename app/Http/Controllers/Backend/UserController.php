@@ -77,7 +77,7 @@ class UserController extends Controller
             return view('backend/users/detail', compact('user'));
         }
 
-        return redirect()->route('users.list')->with('error', 'Error');
+        return redirect()->route('users.list')->with('error', 'Not found data');
     }
 
     /**
@@ -93,7 +93,7 @@ class UserController extends Controller
             return view('backend/users/edit', compact(['user', 'roles']));
         }
 
-        return redirect()->route('users.list')->with('error', 'Error');
+        return redirect()->route('users.list')->with('error', 'Not found data');
     }
 
     /**
@@ -117,7 +117,7 @@ class UserController extends Controller
             return redirect()->route('users.list')->with('success', 'Successfully');
         }
 
-        return redirect()->route('users.list')->with('error', 'Error');
+        return redirect()->route('users.list')->with('error', 'Not found data');
     }
 
     /**
@@ -147,11 +147,24 @@ class UserController extends Controller
     }
 
     /**
+     * @return View
+     */
+    public function getChangePassword($id) {
+        $user = User::find($id);
+
+        if ($user) {
+            return view('backend/users/change-password', compact('id'));
+        }
+
+        return redirect()->route('users.list', $id)->with('error', 'Not found data');
+    }
+
+    /**
      * @param ChangePasswordRequest $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function changePassword(ChangePasswordRequest $request, $id) {
+    public function postChangePassword(ChangePasswordRequest $request, $id) {
         $user = User::find($id);
 
         if ($user) {
@@ -161,10 +174,10 @@ class UserController extends Controller
                 'password' => bcrypt($newPassword)
             ]);
 
-            return redirect()->route('users.get-change-password', $id)->with('success', 'Successfully');
+            return redirect()->route('users.list', $id)->with('success', 'Successfully');
         }
 
-        return redirect()->route('users.get-change-password', $id)->with('error', 'Error');
+        return redirect()->route('users.get-change-password', $id)->with('error', 'Not found data');
     }
 
     public function changeUserActiveStatus(Request $request, $id)
@@ -178,6 +191,6 @@ class UserController extends Controller
             return redirect()->route('users.list')->with('success', 'Successfully');
         }
 
-        return redirect()->route('users.list')->with('error', 'Error');
+        return redirect()->route('users.list')->with('error', 'Not found data');
     }
 }
