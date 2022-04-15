@@ -344,8 +344,8 @@
                                     >
                                     <div class="flex-1 ms-2">
                                         <span class="d-block">
-                                            @if (strlen(Auth::user()->name) > 13)
-                                                {{ substr(Auth::user()->name, 0, 13).'...' }}
+                                            @if (mb_strlen(Auth::user()->name) > 13)
+                                                {{ mb_substr(Auth::user()->name, 0, 13).'...' }}
                                             @else
                                                 {{ Auth::user()->name }}
                                             @endif
