@@ -88,7 +88,7 @@
                                     @csrf
                                     <input type="hidden" name="active" value="{{ $user->active }}">
                                     <label class="switch mr-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="{{ $user->active == ON ? 'Active account' : 'Locked account' }}"
+                                        title="{{ $user->active == ON ? 'Deactive' : 'Active' }}"
                                     >
                                         <input type="checkbox" onchange="this.form.submit()"
                                             @if ($user->active == ON)

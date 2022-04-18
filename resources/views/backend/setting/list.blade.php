@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('includes.alert-block')
     <div class="container">
         <h2>Setting List</h2>
         <table class="table">
@@ -18,7 +19,16 @@
                         <form method="POST" action="{{ route('settings.update', ['id' => $item->id]) }}">
                             @csrf
                             <input type="hidden" name="status" value="{{ $item->status }}">
-                            <input type="submit" class="btn btn-danger" value="{{ $item->status == ON ? 'Disable' : 'Enable' }}">
+                            <label class="switch mr-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                   title="{{ $item->status == ON ? 'Disable' : 'Enable' }}"
+                            >
+                                <input type="checkbox" onchange="this.form.submit()"
+                                    @if ($item->status == ON)
+                                       checked
+                                    @endif
+                                >
+                                <span class="slider round"></span>
+                            </label>
                         </form>
                     </td>
                 </tr>
