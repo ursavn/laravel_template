@@ -170,6 +170,9 @@
                             </ul>
                         </div>
                     </li>
+                    <li>
+                        <a href="{{ route('settings.list') }}"><i class="ti ti-settings me-2"></i>{{ __('Setting Management') }}</a>
+                    </li>
                 @endrole
             </ul>
             <!-- sidebar-menu  -->

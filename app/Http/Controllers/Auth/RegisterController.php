@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -65,10 +67,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $needVerify = Setting::find(3);
+        $emailVerifiedAt = $needVerify->status === OFF ? Carbon::now() : null;
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'email_verified_at' => $emailVerifiedAt
         ]);
 
         return $user->assignRole(USER_ROLE);

@@ -15,7 +15,7 @@
                 <tr>
                     <td>{{ $item->name }}</td>
                     <td>
-                        <form method="POST" action="{{ route('setting.update', ['id' => $item->id]) }}">
+                        <form method="POST" action="{{ route('settings.update', ['id' => $item->id]) }}">
                             @csrf
                             <input type="hidden" name="status" value="{{ $item->status }}">
                             <input type="submit" class="btn btn-danger" value="{{ $item->status == ON ? 'Disable' : 'Enable' }}">
