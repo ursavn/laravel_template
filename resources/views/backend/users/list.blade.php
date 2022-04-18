@@ -24,7 +24,8 @@
                         <th class="text-center border-bottom p-3" style="min-width: 200px;">
                             {{ __('Role') }}
                         </th>
-                        <th class="text-end border-bottom p-3" style="min-width: 200px;"></th>
+                        <th class="text-right border-bottom p-3" style="width: 180px;"></th>
+                        <th class="text-center border-bottom p-3" style="width: 80px;"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,7 +60,7 @@
                             <td class="text-center p-3">
                                 {{ isset($user->roles[0]) ? $user->roles[0]->name : '' }}
                             </td>
-                            <td class="d-flex justify-content-end p-3">
+                            <td class="text-center p-3">
                                 <a
                                     class="btn btn-dark mr-1"
                                     href="{{ route('users.detail', ['id' => $user->id]) }}"
@@ -81,20 +82,21 @@
                                 >
                                     <i class="ti ti-key"></i>
                                 </a>
+                            </td>
+                            <td class="text-center p-3">
                                 <form method="POST" action="{{ route('users.active', ['id' => $user->id]) }}">
                                     @csrf
                                     <input type="hidden" name="active" value="{{ $user->active }}">
-                                    <button
-                                        type="submit" class="btn btn-danger mr-1"
-                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="{{ $user->active == ON ? 'Active' : 'Deactivate' }}"
+                                    <label class="switch mr-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="{{ $user->active == ON ? 'Active account' : 'Locked account' }}"
                                     >
-                                        @if($user->active == ON)
-                                            <i class="ti ti-lock"></i>
-                                        @else
-                                            <i class="ti ti-lock-open"></i>
-                                        @endif
-                                    </button>
+                                        <input type="checkbox" onchange="this.form.submit()"
+                                            @if ($user->active == ON)
+                                               checked
+                                            @endif
+                                        >
+                                        <span class="slider round"></span>
+                                    </label>
                                 </form>
                             </td>
                         </tr>
