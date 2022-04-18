@@ -42,6 +42,7 @@ class SettingController extends Controller
         $setting = Setting::find($id);
         $newStatus = $request->status == OFF ? 1 : 0;
         $setting->update(['status' => $newStatus]);
-        return redirect()->route('settings.list');
+
+        return redirect()->route('settings.list')->with('success', 'Successfully');
     }
 }
