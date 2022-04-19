@@ -141,7 +141,7 @@ class UserController extends Controller
             ]);
         }
 
-        return response()->json(['message' => 'not found data'], 404);
+        return response()->json(['message' => 'User not found'], 404);
     }
 
     /**
@@ -154,12 +154,12 @@ class UserController extends Controller
         $user = User::find($request->id);
 
         if ($user) {
-            $status = $request->active == OFF ? 1 : 0;
-            $user->update(['active' => $status]);
-
-            return response()->json(['message' => 'successfully']);
+            if ($user->active !== $request->active) {
+                $user->update(['active' => $request->active]);
+            }
+            return response()->json(['message' => 'Successfully']);
         }
 
-        return response()->json(['message' => 'not found data'], 404);
+        return response()->json(['message' => 'User not found'], 404);
     }
 }
