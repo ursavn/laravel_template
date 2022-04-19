@@ -24,8 +24,7 @@
                         <th class="text-center border-bottom p-3" style="min-width: 200px;">
                             {{ __('Role') }}
                         </th>
-                        <th class="text-right border-bottom p-3" style="width: 180px;"></th>
-                        <th class="text-center border-bottom p-3" style="width: 80px;"></th>
+                        <th class="text-right border-bottom p-3" style="min-width: 200px;"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -82,21 +81,18 @@
                                 >
                                     <i class="ti ti-key"></i>
                                 </a>
-                            </td>
-                            <td class="text-center p-3">
-                                <form method="POST" action="{{ route('users.active', ['id' => $user->id]) }}">
+                                <form style="display: inline" method="POST" action="{{ route('users.active', ['id' => $user->id]) }}">
                                     @csrf
                                     <input type="hidden" name="active" value="{{ $user->active }}">
-                                    <label class="switch mr-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="{{ $user->active == ON ? 'Deactive' : 'Active' }}"
-                                    >
-                                        <input type="checkbox" onchange="this.form.submit()"
-                                            @if ($user->active == ON)
-                                               checked
-                                            @endif
-                                        >
-                                        <span class="slider round"></span>
-                                    </label>
+                                    @if ($user->active == ON)
+                                        <button class="btn btn-danger mr-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Deactive">
+                                            <i class="ti ti-lock"></i>
+                                        </button>
+                                    @else
+                                        <button class="btn btn-light mr-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Active">
+                                            <i class="ti ti-lock-off"></i>
+                                        </button>
+                                    @endif
                                 </form>
                             </td>
                         </tr>

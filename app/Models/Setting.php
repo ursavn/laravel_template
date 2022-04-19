@@ -19,6 +19,7 @@ class Setting extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name',
+        'short_name',
         'status'
     ];
 }

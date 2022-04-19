@@ -122,9 +122,9 @@ function activateSidebarMenu() {
         for (var i = 0, len = menuItems.length; i < len; i++) {
             let url = menuItems[i].getAttribute("href");
             let domain = (new URL(url));
-            let name = domain.pathname.substring(1);
+            let pathname = domain.pathname.substring(1);
 
-            if (name === current) {
+            if (pathname === current) {
                 menuItems[i].parentElement.className += " active";
                 if(menuItems[i].closest(".sidebar-submenu")) {
                     menuItems[i].closest(".sidebar-submenu").classList.add("d-block");
