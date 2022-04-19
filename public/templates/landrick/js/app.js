@@ -116,11 +116,15 @@ function activateMenu() {
 
 //Admin Menu
 function activateSidebarMenu() {
-    var current = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
+    var current = location.pathname.substring(1);
     if (current !== "" && document.getElementById("sidebar")){
         var menuItems = document.querySelectorAll('#sidebar a');
         for (var i = 0, len = menuItems.length; i < len; i++) {
-            if (menuItems[i].getAttribute("href").indexOf(current) !== -1) {
+            let url = menuItems[i].getAttribute("href");
+            let domain = (new URL(url));
+            let pathname = domain.pathname.substring(1);
+
+            if (pathname === current) {
                 menuItems[i].parentElement.className += " active";
                 if(menuItems[i].closest(".sidebar-submenu")) {
                     menuItems[i].closest(".sidebar-submenu").classList.add("d-block");
@@ -168,7 +172,7 @@ if(document.getElementById("sidebar")){
 function windowScroll() {
     var navbar = document.getElementById("topnav");
     if(navbar === null) {
-        
+
     }else if( document.body.scrollTop >= 50 ||
     document.documentElement.scrollTop >= 50){
         navbar.classList.add("nav-sticky");
@@ -190,7 +194,7 @@ window.onscroll = function () {
 function scrollFunction() {
     var mybutton = document.getElementById("back-to-top");
     if(mybutton === null) {
-        
+
     }else if( document.body.scrollTop > 500 || document.documentElement.scrollTop > 500){
         mybutton.style.display = "block";
     }else {
@@ -264,5 +268,5 @@ try {
         document.getElementById('theme-opt').href = 'assets/css/' + theme + '.min.css';
     };
 } catch (error) {
-    
+
 }
