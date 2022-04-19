@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Throwable;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 class Handler extends ExceptionHandler
 {
@@ -55,6 +56,9 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof UnauthorizedException) {
             return response()->json(['User does not have the right roles.'],403);
+        }
+        if ($exception instanceof TokenExpiredException) {
+            return response()->json(['error' => 'Token has expired'], 401);
         }
 
         return parent::render($request, $exception);
