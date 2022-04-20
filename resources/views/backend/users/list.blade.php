@@ -28,11 +28,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($users as $user)
+                    @forelse($users as $i => $user)
                         <!-- Start -->
                         <tr>
                             <th class="p-3">
-                                #{{ $user->id }}
+                                #{{ ($i + 1) + (($users->currentPage() - 1) * $users->perPage()) }}
                             </th>
                             <td class="p-3">
                                 <a href="#" class="text-primary">
@@ -41,9 +41,9 @@
                                             src="{{ __('templates/landrick/images/client/01.jpg') }}"
                                             class="avatar avatar-ex-small rounded-circle shadow" alt=""
                                         >
-                                        @if (mb_strlen($user->name) > 50)
+                                        @if (mb_strlen($user->name) > 40)
                                             <span class="ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $user->name }}">
-                                                {{ mb_substr($user->name, 0, 50).'...' }}
+                                                {{ mb_substr($user->name, 0, 40).'...' }}
                                             </span>
                                         @else
                                             <span class="ms-2">
@@ -99,7 +99,7 @@
                         <!-- End -->
                     @empty
                         <tr>
-                            <td colspan="4"></td>
+                            <td colspan="5"></td>
                         </tr>
                     @endforelse
                     </tbody>
