@@ -107,7 +107,10 @@ class AuthController extends Controller
      */
     public function userProfile(): JsonResponse
     {
-        return response()->json(auth()->user());
+        $user = auth()->user()->toArray();
+        $role = auth()->user()->getRoleNames()->first();
+        $user['roles'] = $role ?? null;
+        return response()->json($user);
     }
 
     /**
