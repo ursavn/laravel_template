@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UsersRequest\ChangePasswordRequest;
 use App\Http\Requests\Api\UsersRequest\CreateRequest;
 use App\Http\Requests\Api\UsersRequest\UpdateRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -43,7 +44,7 @@ class UserController extends Controller
         $user = User::find($request->id);
 
         if ($user) {
-            return response()->json($user);
+            return response()->json(new UserResource($user));
         }
 
         return response()->json(['message' => 'not found data'], 404);
@@ -67,7 +68,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User successfully created',
-            'user' => $user
+            'user' => new UserResource($user)
         ]);
     }
 
@@ -91,7 +92,7 @@ class UserController extends Controller
 
             return response()->json([
                 'message' => 'User successfully updated',
-                'user' => $user
+                'user' => new UserResource($user)
             ]);
         }
 
@@ -114,7 +115,7 @@ class UserController extends Controller
 
             return response()->json([
                 'message' => 'User successfully changed password',
-                'user' => $user
+                'user' => new UserResource($user)
             ]);
         }
 
@@ -137,7 +138,7 @@ class UserController extends Controller
 
             return response()->json([
                 'message' => 'User successfully changed permission',
-                'user' => $user
+                'user' => new UserResource($user)
             ]);
         }
 

@@ -8,6 +8,7 @@ use App\Http\Requests\Api\AuthRequest\UpdateProfileRequest;
 use App\Http\Requests\Api\ChangePasswordRequest;
 use App\Http\Requests\Api\UsersRequest\ChangePasswordRequest as ResetPasswordRequest;
 use App\Http\Requests\SendMailRequest;
+use App\Http\Resources\UserResource;
 use App\Mail\NotifyMail;
 use App\Models\PasswordReset;
 use Facebook\Facebook;
@@ -107,9 +108,7 @@ class AuthController extends Controller
      */
     public function userProfile(): JsonResponse
     {
-        $user = auth()->user()->toArray();
-        $role = auth()->user()->getRoleNames()->first();
-        $user['roles'] = $role ?? null;
+        $user = new UserResource(auth()->user());
         return response()->json($user);
     }
 
@@ -129,7 +128,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Profile successfully updated',
-            'user' => $user
+            'user' => new UserResource($user)
         ]);
     }
 
@@ -145,7 +144,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60,
-            'user' => auth()->user()
+            'user' => new UserResource(auth()->user())
         ]);
     }
 
@@ -216,7 +215,7 @@ class AuthController extends Controller
             return response()->json([
                 'token' => $token,
                 'message' => 'Login facebook successfully',
-                'user' => $user,
+                'user' => new UserResource($user),
             ], 201);
         } catch (\Exception $e) {
             Log::error('Error when login with facebook: ' . $e->getMessage());
@@ -257,7 +256,7 @@ class AuthController extends Controller
             return response()->json([
                 'token' => $token,
                 'message' => 'Login google successfully',
-                'user' => $user,
+                'user' => new UserResource($user),
             ], 201);
         } catch (\Exception $e) {
             Log::error('Error when login with google: ' . $e->getMessage());
@@ -330,7 +329,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'message' => 'User successfully changed password',
-                'user' => $user
+                'user' => new UserResource($user)
             ]);
         }
 
