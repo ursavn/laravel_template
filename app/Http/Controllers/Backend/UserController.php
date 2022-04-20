@@ -64,6 +64,7 @@ class UserController extends Controller
     {
         $users = User::with('roles')->paginate(PAGINATE_NUM);
 
+
         return view('backend/users/list', compact('users'));
     }
 

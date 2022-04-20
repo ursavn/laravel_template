@@ -28,7 +28,7 @@ class SettingController extends Controller
      */
     public function index(): View
     {
-        $setting = Setting::all();
+        $setting = Setting::paginate(PAGINATE_NUM);
         return view('backend/setting/list', compact('setting'));
     }
 
