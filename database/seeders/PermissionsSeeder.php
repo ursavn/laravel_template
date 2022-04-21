@@ -26,12 +26,12 @@ class PermissionsSeeder extends Seeder
         //Permission::create(['name' => 'edit articles']);
 
         // create roles and assign existing permissions
-        $role1 = Role::create(['name' => 'user']);
+        $role1 = Role::create(['name' => 'user', 'guard_name' => '*']);
         //$role1->givePermissionTo('edit articles');
 
-        $role2 = Role::create(['name' => 'admin']);
+        $role2 = Role::create(['name' => 'admin', 'guard_name' => '*']);
 
-        $role3 = Role::create(['name' => 'super-admin']);
+        $role3 = Role::create(['name' => 'super-admin', 'guard_name' => '*']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
 
         // create demo users

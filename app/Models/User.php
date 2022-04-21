@@ -63,4 +63,6 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     {
         return [];
     }
+
+    public $guard_name = '*';
 }
