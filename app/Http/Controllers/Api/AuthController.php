@@ -51,6 +51,9 @@ class AuthController extends Controller
         if (! $token = JWTAuth::attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        if (Auth::user()->email_verified_at === null) {
+            return response()->json(['error' => 'The email is not verified'], 401);
+        }
 
         return $this->createNewToken($token);
     }
