@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UsersRequest\ChangePasswordRequest;
 use App\Http\Requests\Api\UsersRequest\CreateRequest;
 use App\Http\Requests\Api\UsersRequest\UpdateRequest;
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -31,7 +32,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return response()->json($users);
+        return response()->json(new UserCollection($users));
     }
 
     /**
